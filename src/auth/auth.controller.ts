@@ -1,6 +1,5 @@
 import { Controller, Post, Body, Session, Get, Inject, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { AuthMiddleware } from 'src/middleware/AuthMiddleware';
 
 @Controller('auth')
 export class AuthController {
@@ -27,7 +26,6 @@ export class AuthController {
 
   // 使用受保护的路由示例
   @Get('protected')
-  @UseMiddleware(AuthMiddleware)
   protectedRoute() {
     return { message: '这是一个受保护的路由' };
   }
