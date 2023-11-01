@@ -1,19 +1,31 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TextileService } from './textile/textile.service';
 import { TextileModule } from './textile/textile.module';
-
-import { TextileController } from './textile/textile.controller';
-import { UserService } from './user/user.service';
-import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
-import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import{ConfigModule} from '@nestjs/config'
+
 
 @Module({
-  imports: [TextileModule, UserModule, UserModule, AuthModule],
-  controllers: [AppController, UserController,TextileController, UserController, AuthController],
-  providers: [AppService, TextileService, UserService, UserService],
+  imports: [
+    ConfigModule.forRoot(),TextileModule, TypeOrmModule.forRoot(
+    {    
+    type: 'postgres',
+    host: process.env.DATABASE_HOST,
+    port: +process.env.DATABASE_PORT,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.NAME,
+    autoLoadEntities: true,
+    synchronize: true,
+  }
+
+  ), UserModule, UserModule, AuthModule],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
+
+console.log(process.env)

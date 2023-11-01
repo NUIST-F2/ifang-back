@@ -1,18 +1,18 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
-import { Repository } from 'typeorm';
+import { Repository,DataSource} from 'typeorm';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
-@Injectable()
+@Injectable({scope:Scope.TRANSIENT})
 export class UserService {
     constructor(
         @InjectRepository(User)
-        private readonly userRepository:Repository<User>
+        private readonly userRepository:Repository<User>,
+        private readonly connection:DataSource,
     ){
+        console.log('111')
     }
-      
-    private users:User[]= [];
     async createUser(createUserDto:CreateUserDto){
         /* username:string,password:string,Types:string */
         /*         const user:User = {
@@ -29,11 +29,11 @@ export class UserService {
     }
   /*   findUserByUsername(username: string): User {
         return this.users.find(user => user.username === username);
+    }*/
+    async validateUser(username: string, password: string,Types:string): Promise<boolean> {
+        const user = await this.findUserByUsername(username);
+        return user && (user).password === password && user.Types === Types;
     }
-    validateUser(username: string, password: string,Types:string): boolean {
-        const user = this.findUserByUsername(username);
-        return user && user.password === password && user.Types === Types;
-    } */
 
 
     async findUserByUsername(username:string):Promise<User>{
