@@ -1,14 +1,17 @@
 import { Controller, Post, Body, Session, Get, Inject, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { User } from 'src/entities/user.entity';
+import { CreateUserDto } from 'src/dto/create-user.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly userService: UserService) {}
 
   @Post('register')
-  register(@Body() userInfo: { username: string; password: string;type:string}) {
+  register(@Body() userInfo: { username: string; password: string;type:string},createUserDto:CreateUserDto) {
+
     const { username, password,type} = userInfo;
-    const user = this.userService.createUser(username, password,type);
+    const user = this.userService.createUser(createUserDto);
     return { message: '注册成功', user };
   }
 
