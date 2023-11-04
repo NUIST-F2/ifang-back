@@ -8,13 +8,10 @@ export class AuthController {
   constructor(private readonly userService: UserService) {}
 
   @Post('register')
-  register(@Body() userInfo: { username: string; password: string;type:string},createUserDto:CreateUserDto) {
-
-    const { username, password,type} = userInfo;
+  register(@Body()createUserDto:CreateUserDto) {
     const user = this.userService.createUser(createUserDto);
-    return { message: '注册成功', user };
+    return { message: '注册成功', user }; 
   }
-
   @Post('login')
   login(@Body() userInfo: { username: string; password: string ;type:string}, @Session() session: any) {
     const { username, password,type} = userInfo;
