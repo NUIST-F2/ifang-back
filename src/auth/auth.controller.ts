@@ -2,6 +2,7 @@ import { Controller, Post, Body, Session, Get, Inject, Injectable } from '@nestj
 import { UserService } from '../user/user.service';
 import { User } from 'src/entities/user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
+import { Role } from 'src/role/roles.enum';
 
 @Controller('auth')
 export class AuthController {
@@ -13,9 +14,9 @@ export class AuthController {
     return { message: '注册成功', user }; 
   }
   @Post('login')
-  login(@Body() userInfo: { username: string; password: string ;type:string}, @Session() session: any) {
-    const { username, password,type} = userInfo;
-    const isValidUser = this.userService.validateUser(username, password,type);
+  login(@Body() userInfo: { username: string; password: string ;role:Role[]}, @Session() session: any) {
+    const { username, password,role} = userInfo;
+    const isValidUser = this.userService.validateUser(username, password,role);
     if (isValidUser) {
       session.user = { username }; // 将用户信息写入会话
       return { message: '登录成功', user: { username } };

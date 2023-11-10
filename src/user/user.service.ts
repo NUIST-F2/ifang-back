@@ -4,6 +4,7 @@ import { User } from 'src/entities/user.entity';
 import { Repository,DataSource} from 'typeorm';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { Role } from 'src/role/roles.enum';
 @Injectable({scope:Scope.TRANSIENT})
 export class UserService {
     constructor(
@@ -30,9 +31,9 @@ export class UserService {
   /*   findUserByUsername(username: string): User {
         return this.users.find(user => user.username === username);
     }*/
-    async validateUser(username: string, password: string,Types:string): Promise<boolean> {
+    async validateUser(username: string, password: string,role:Role[]): Promise<boolean> {
         const user = await this.findUserByUsername(username);
-        return user && (user).password === password && user.Types === Types;
+        return user && (user).password === password && user.role === role;
     }
 
 
