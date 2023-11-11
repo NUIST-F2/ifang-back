@@ -37,3 +37,6 @@ lerna-debug.log*
 
 # Env
 *.env
+*lnmp2.0.tar.gz
+*lnmp2.0
+*lixuan.db
