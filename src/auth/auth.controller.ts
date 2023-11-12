@@ -1,9 +1,10 @@
-import { Controller, Post, Body, Session, Get, Inject, Injectable } from '@nestjs/common';
+import { Controller, Post, Body, Session, Get, Inject, Injectable, HttpCode, HttpStatus } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from 'src/entities/user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { AuthService } from './auth.service';
+import { Http2ServerRequest } from 'http2';
 
 
 
@@ -16,7 +17,17 @@ export class AuthController {
     const user = this.userService.createUser(createUserDto);
     return { message: '注册成功', user }; 
   }
+
+
+  @HttpCode(HttpStatus.OK)
   @Post('login')
+  signIn(@Body() signInDto: Record<string,any>){
+    return this.authService.signIn(signInDto.username,signInDto.password);
+  }
+
+
+
+/*   @Post('login')
   login(@Body() userInfo: { username: string; password: string ;role:Role[]}, @Session() session: any) {
     const { username, password,role} = userInfo;
     const isValidUser = this.authService.validateUser(username, password,role);
@@ -26,7 +37,7 @@ export class AuthController {
     } else {
       return { message: '用户名或密码错误' };
     }
-  }
+  } */
 
   // 使用受保护的路由示例
   @Get('protected')

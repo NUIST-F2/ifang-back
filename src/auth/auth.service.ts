@@ -1,5 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Get, Injectable, UnauthorizedException, UseGuards,Request} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
 import { Role } from 'src/role/roles.enum';
 import { UserService } from 'src/user/user.service';
 @Injectable()
@@ -21,6 +22,12 @@ export class AuthService {
         return{
             access_token:await this.jwtService.signAsync(payload),
         };
+    }
+
+    @UseGuards(AuthGuard)
+    @Get('profile')
+    getProfile(@Request() req){
+        return req.user;
     }
 
 
