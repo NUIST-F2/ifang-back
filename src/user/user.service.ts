@@ -31,10 +31,6 @@ export class UserService {
   /*   findUserByUsername(username: string): User {
         return this.users.find(user => user.username === username);
     }*/
-    async validateUser(username: string, password: string,role:Role[]): Promise<boolean> {
-        const user = await this.findUserByUsername(username);
-        return user && (user).password === password && user.role === role;
-    }
 
 
     async findUserByUsername(username:string):Promise<User>{

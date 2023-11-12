@@ -3,10 +3,13 @@ import { UserService } from '../user/user.service';
 import { User } from 'src/entities/user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Role } from 'src/role/roles.enum';
+import { AuthService } from './auth.service';
+
+
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly authService: AuthService,private readonly userService:UserService) {}
 
   @Post('register')
   register(@Body()createUserDto:CreateUserDto) {
@@ -16,7 +19,7 @@ export class AuthController {
   @Post('login')
   login(@Body() userInfo: { username: string; password: string ;role:Role[]}, @Session() session: any) {
     const { username, password,role} = userInfo;
-    const isValidUser = this.userService.validateUser(username, password,role);
+    const isValidUser = this.authService.validateUser(username, password,role);
     if (isValidUser) {
       session.user = { username }; // 将用户信息写入会话
       return { message: '登录成功', user: { username } };
