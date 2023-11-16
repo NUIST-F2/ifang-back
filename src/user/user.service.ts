@@ -5,6 +5,8 @@ import { Repository,DataSource} from 'typeorm';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { Role } from 'src/role/roles.enum';
+import { resolveNs } from 'dns';
+import { Roles } from 'src/role/roles.decorator';
 @Injectable({scope:Scope.TRANSIENT})
 export class UserService {
     constructor(
@@ -43,6 +45,15 @@ export class UserService {
         return User;
     }
 
+    async findUserById(id:number):Promise<User>{
+        const User = await this.userRepository.findOne({where:{id:id}});
+        if(!id)
+        {
+            throw new HttpException(`id #${id} not found!!`,HttpStatus.NOT_FOUND);
+        }
+        return User;
+    }
+
 
     async updateUser(username:string,updateUserDto:UpdateUserDto){
         //const existingCoffee = this.findOne(id);
@@ -60,6 +71,19 @@ export class UserService {
         }
         return this.userRepository.save(user);
     }
+
+    async deleteUserByUsername(username:string)
+    {
+        const user = await this.findUserByUsername(username);
+        return this.userRepository.remove(user);
+    }
+
+    async deleteUserById(id:number)
+    {
+        const user = await this.findUserById(id);
+        return this.userRepository.remove(user);
+    }
+
 
 
 
