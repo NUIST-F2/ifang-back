@@ -1,35 +1,49 @@
-import { Controller, Post, Body, Session, Get, Inject, Injectable, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Session,
+  Get,
+  Inject,
+  Injectable,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from 'src/entities/user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { AuthService } from './auth.service';
 import { Http2ServerRequest } from 'http2';
-import { Public } from './auth.module';
-
-
+import { Public } from 'src/utils/common';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService,private readonly userService:UserService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post('register')
-  register(@Body()createUserDto:CreateUserDto) {
+  register(@Body() createUserDto: CreateUserDto) {
     const user = this.userService.createUser(createUserDto);
-    return { message: '注册成功', user }; 
+    return { message: '注册成功', user };
   }
-
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @Public()
-  signIn(@Body() signInDto: Record<string,any>){
-    return this.authService.signIn(signInDto.username,signInDto.password,signInDto.role);
+  signIn(@Body() signInDto: Record<string, any>) {
+    console.log('signInDto', signInDto);
+
+    return this.authService.signIn(
+      signInDto.username,
+      signInDto.password,
+      signInDto.role,
+    );
   }
 
-
-
-/*   @Post('login')
+  /*   @Post('login')
   login(@Body() userInfo: { username: string; password: string ;role:Role[]}, @Session() session: any) {
     const { username, password,role} = userInfo;
     const isValidUser = this.authService.validateUser(username, password,role);
@@ -42,7 +56,7 @@ export class AuthController {
   } */
 
   // 使用受保护的路由示例
-/*   @Get('protected')
+  /*   @Get('protected')
   protectedRoute() {
     return { message: '这是一个受保护的路由' };
   } */

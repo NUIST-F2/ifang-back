@@ -1,16 +1,15 @@
-import { IsString, isString } from "class-validator";
-import { Role } from "src/role/roles.enum";
+import { IsString, isString } from 'class-validator';
+import { Role } from 'src/role/roles.enum';
+import { PrimaryGeneratedColumn } from 'typeorm';
 
+export class CreateUserDto {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-
-export class CreateUserDto{
-
-    id:number;
-
-    @IsString()
-    username:string;
-    @IsString()
-    password:string;
-    @IsString()
-    role:Role;
+  @IsString()
+  userName: string;
+  @IsString()
+  password: string;
+  @IsString()
+  role: Role;
 }
