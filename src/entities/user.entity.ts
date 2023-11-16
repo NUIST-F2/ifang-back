@@ -1,14 +1,17 @@
 import { Role } from "src/role/roles.enum";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User{
     @Column() //列
     id:number;
-    @PrimaryGeneratedColumn() //主键列
+    @PrimaryColumn() //主键列
     username:string;
     @Column() //列
     password:string;
-    @JoinTable() //列
-    role:Role[];
+    @Column({
+        type: "enum",
+        enum: Role,
+    })
+    role: Role
 }
