@@ -5,7 +5,7 @@ import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { AuthService } from './auth.service';
 import { Http2ServerRequest } from 'http2';
-import { Public } from './auth.module';
+import { Public } from './auth.decorator'
 
 
 
@@ -21,8 +21,8 @@ export class AuthController {
 
 
   @HttpCode(HttpStatus.OK)
-  @Post('login')
   @Public()
+  @Post('login')
   signIn(@Body() signInDto: Record<string,any>){
     return this.authService.signIn(signInDto.username,signInDto.password,signInDto.role);
   }
