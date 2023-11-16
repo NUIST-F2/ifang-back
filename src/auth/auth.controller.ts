@@ -5,6 +5,7 @@ import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { AuthService } from './auth.service';
 import { Http2ServerRequest } from 'http2';
+import { Public } from './auth.module';
 
 
 
@@ -21,6 +22,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @Public()
   signIn(@Body() signInDto: Record<string,any>){
     return this.authService.signIn(signInDto.username,signInDto.password,signInDto.role);
   }
@@ -40,8 +42,8 @@ export class AuthController {
   } */
 
   // 使用受保护的路由示例
-  @Get('protected')
+/*   @Get('protected')
   protectedRoute() {
     return { message: '这是一个受保护的路由' };
-  }
+  } */
 }

@@ -26,4 +26,4 @@ import { User } from 'src/entities/user.entity';
 })
 export class AuthModule {}
 export const IS_PUBLIC_KEY = 'isPublic';
-export const Pubilc = () => SetMetadata(IS_PUBLIC_KEY,true);
+export const Public = () => SetMetadata(IS_PUBLIC_KEY,true);
