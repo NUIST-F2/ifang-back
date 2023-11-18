@@ -1,11 +1,12 @@
 import { Role } from "src/role/roles.enum";
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
 export class User {
-    @Column() //列
+    @PrimaryGeneratedColumn() //列
     id: number;
-    @PrimaryColumn() //主键列
+    @Index({ unique: true })
+    @Column({ unique: true })
     username: string;
     @Column() //列
     password: string;
