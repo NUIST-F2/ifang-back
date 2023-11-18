@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { UserService } from './user.service';
 import { Roles } from 'src/role/roles.decorator';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
+
+@UseGuards(AuthGuard)
 @Controller('user')
 export class UserController {
     constructor(private readonly userService:UserService){
@@ -19,15 +22,17 @@ export class UserController {
         return this.userService.createUser(createUserDto);
     }
     
-    @Delete(':id')
+
     @Roles('admin')
+    @Delete(':id')
     deleteUserById(@Param('id') id:number)
     {
         return this.userService.deleteUserById(id);
     }
-    
-    @Delete(':username')
+
+
     @Roles('admin')
+    @Delete(':username')
     deleteUserByUsername(@Param('username')username:string)
     {
         return this.userService.deleteUserByUsername(username);
@@ -36,13 +41,16 @@ export class UserController {
     @Get(':id')
     findUserById(@Param('id')id:number)
     {
-        return this.findUserById(id);
+        if(!this.userService.findUserById(id)){
+            throw new HttpException(`id #${id} not found!!`,HttpStatus.NOT_FOUND);
+        }
+        return this.userService.findUserById(id);
     }
 
-    @Get(':username')
-    findUserByUsername(@Param('username')username:string)
+    @Get('/:username')
+    findUserByUsername(@Param('username') username:string)
     {
-        return this.findUserByUsername(username);
+        return this.userService.findUserByUsername(username);
     }
 
     @Roles('admin')

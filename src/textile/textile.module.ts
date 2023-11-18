@@ -4,4 +4,4 @@ import { TextileController } from './textile.controller';
 @Module({
   controllers: [TextileController]
 })
-export class TextileModule {}
+export class TextileModule { }

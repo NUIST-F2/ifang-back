@@ -3,14 +3,14 @@ import { Role } from "src/role/roles.enum";
 
 
 
-export class CreateUserDto{
+export class CreateUserDto {
 
-    id:number;
+    id: number;
 
     @IsString()
-    username:string;
+    username: string;
     @IsString()
-    password:string;
+    password: string;
     @IsString()
-    role:Role;
+    role: Role;
 }
