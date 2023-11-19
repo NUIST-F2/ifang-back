@@ -24,21 +24,20 @@ export class UserController {
     
 
     @Roles('admin')
-    @Delete(':id')
-    deleteUserById(@Param('id') id:number)
-    {
+    @Delete('deletebyid/:id')
+    deleteUserById(@Param('id') id: number) {
         return this.userService.deleteUserById(id);
     }
 
 
     @Roles('admin')
-    @Delete(':username')
+    @Delete('deletebyname/:username')
     deleteUserByUsername(@Param('username')username:string)
     {
         return this.userService.deleteUserByUsername(username);
     }
 
-    @Get(':id')
+    @Get('findid/:id')
     findUserById(@Param('id')id:number)
     {
         if(!this.userService.findUserById(id)){
@@ -47,14 +46,14 @@ export class UserController {
         return this.userService.findUserById(id);
     }
 
-    @Get('/:username')
+    @Get('findname/:username')
     findUserByUsername(@Param('username') username:string)
     {
         return this.userService.findUserByUsername(username);
     }
 
     @Roles('admin')
-    @Patch(':id')
+    @Patch('update/:id')
     update(@Param('id') id:string  ,@Body() updateUserDto:UpdateUserDto){
         return this.userService.updateUser(id, updateUserDto);
     }

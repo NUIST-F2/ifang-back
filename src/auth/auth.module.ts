@@ -15,7 +15,7 @@ import { User } from 'src/entities/user.entity';
     imports: [UserModule, PassportModule, JwtModule.register({
         global: true,
         secret: jwConstants.secret,
-        signOptions: { expiresIn: '60s' }
+        signOptions: { expiresIn: '1h' }
     }), TypeOrmModule.forFeature([User])],
     controllers: [AuthController],
     providers: [AuthService, LocalStategy, {
