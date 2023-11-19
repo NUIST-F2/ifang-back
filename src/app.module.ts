@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TextileModule } from './textile/textile.module';
@@ -6,8 +6,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config'
-
-
+import { CorsMiddleware } from '@nest-middlewares/cors';
 @Module({
   imports: [
     ConfigModule.forRoot(), TextileModule, TypeOrmModule.forRoot(
@@ -22,8 +21,15 @@ import { ConfigModule } from '@nestjs/config'
         synchronize: true,
       }
 
-    ), UserModule, UserModule, AuthModule],
+    ), UserModule, UserModule, AuthModule, 
+    ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule { 
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CorsMiddleware).forRoutes('http:/localhost:5173');
+
+
+}
+}
