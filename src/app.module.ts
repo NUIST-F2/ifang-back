@@ -28,7 +28,7 @@ import { CorsMiddleware } from '@nest-middlewares/cors';
 })
 export class AppModule { 
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(CorsMiddleware).forRoutes('http:/localhost:5173');
+    consumer.apply(CorsMiddleware).forRoutes('http://localhost:5173');
 
 
 }
