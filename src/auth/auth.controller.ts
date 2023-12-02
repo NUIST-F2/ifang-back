@@ -1,17 +1,28 @@
-import { Controller, Post, Body, Session, Get, Inject, Injectable, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Session,
+  Get,
+  Inject,
+  Injectable,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { User } from 'src/entities/user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { AuthService } from './auth.service';
 import { Http2ServerRequest } from 'http2';
-import { Public } from './auth.decorator'
-
-
+import { Public } from './auth.decorator';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService, private readonly userService: UserService) { }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
@@ -19,15 +30,16 @@ export class AuthController {
     return { message: '注册成功', user };
   }
 
-
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password, signInDto.role);
+    return this.authService.signIn(
+      signInDto.username,
+      signInDto.password,
+      signInDto.role,
+    );
   }
-
-
 
   /*   @Post('login')
     login(@Body() userInfo: { username: string; password: string ;role:Role[]}, @Session() session: any) {
