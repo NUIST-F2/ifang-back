@@ -1,14 +1,7 @@
-import { profile } from 'console';
 import {
-  BeforeInsert,
-  BeforeUpdate,
   Column,
   Entity,
-  Index,
-  JoinColumn,
   ManyToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Profile } from './profile.entity';
 

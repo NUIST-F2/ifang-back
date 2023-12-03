@@ -7,6 +7,7 @@ import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { resolveNs } from 'dns';
 import { Roles } from 'src/role/roles.decorator';
+import { Profile } from 'src/entities/profile.entity';
 
 
 
@@ -15,7 +16,9 @@ import { Roles } from 'src/role/roles.decorator';
 export class UserService {
     constructor(
         @InjectRepository(User)
+        @InjectRepository(Profile)
         private readonly userRepository:Repository<User>,
+        private readonly profileRepository:Repository<Profile>,
         private readonly connection:DataSource,
     ){
         console.log('111')///text of git
@@ -71,7 +74,18 @@ export class UserService {
         return this.userRepository.remove(user);
     }
 
+    async findUserProfile(id:number)
+    {
+        const Profile = await this.profileRepository.findOne({where:{id:id}});
+        if(!Profile)
+        {
+            throw new HttpException(`id #${id} not found!!`,HttpStatus.NOT_FOUND);
+            
+        }
+        return Profile;
+    }
 
+    
 
     //需要完成用户个人信息页面
 
