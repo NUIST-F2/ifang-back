@@ -7,6 +7,10 @@ import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { Role } from 'src/role/roles.enum';
 import { resolveNs } from 'dns';
 import { Roles } from 'src/role/roles.decorator';
+
+
+
+
 @Injectable({scope:Scope.TRANSIENT})
 export class UserService {
     constructor(
@@ -17,22 +21,10 @@ export class UserService {
         console.log('111')///text of git
     }
     async createUser(createUserDto:CreateUserDto){
-        /* username:string,password:string,Types:string */
-        /*         const user:User = {
-            id: this.users.length + 1,
-            username,
-            password,
-            Types,
-            
-        };
-        this.users.push(user);
-        return user; */
+
         const user = this.userRepository.create({...createUserDto});
         return this.userRepository.save(user);
     }
-  /*   findUserByUsername(username: string): User {
-        return this.users.find(user => user.username === username);
-    }*/
 
 
     async findUserByUsername(username:string):Promise<User>{
@@ -56,11 +48,6 @@ export class UserService {
 
 
     async updateUser(username:string,updateUserDto:UpdateUserDto){
-        //const existingCoffee = this.findOne(id);
-        //if(existingCoffee){
-            //update the existing entity
-        //}
-        
         const user = await this.userRepository.preload({
             username: username,
             ...updateUserDto,
@@ -83,6 +70,7 @@ export class UserService {
         const user = await this.findUserById(id);
         return this.userRepository.remove(user);
     }
+
 
 
     //需要完成用户个人信息页面
