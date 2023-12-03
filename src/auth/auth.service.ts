@@ -1,6 +1,5 @@
 import { Get, Injectable, UnauthorizedException, UseGuards, Request } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from './auth.guard';
+import { JwtService } from '@nestjs/jwt';;
 import { Role } from 'src/role/roles.enum';
 import { UserService } from 'src/user/user.service';
 import { PassportModule } from '@nestjs/passport';

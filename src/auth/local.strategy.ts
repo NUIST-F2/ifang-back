@@ -1,8 +1,8 @@
-import { Strategy } from "passport-local";
-import { PassportStrategy } from "@nestjs/passport"
-import { AuthService } from "./auth.service";
-import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
-import { Role } from "src/role/roles.enum";
+import { Strategy } from 'passport-local';
+import { PassportStrategy } from '@nestjs/passport';
+import { AuthService } from './auth.service';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Role } from 'src/role/roles.enum';
 
 @Injectable()
 export class LocalStategy extends PassportStrategy(Strategy) {
@@ -10,8 +10,6 @@ export class LocalStategy extends PassportStrategy(Strategy) {
     super();
   }
   async validate(username: string, password: string, role: Role): Promise<any> {
-
-
     const user = await this.authService.validateUser(username, password, role);
     console.log(username);
     if (!user) {
@@ -19,9 +17,4 @@ export class LocalStategy extends PassportStrategy(Strategy) {
     }
     return user;
   }
-
-
-
-
 }
-
