@@ -33,6 +33,7 @@
     "class-validator": "^0.14.0",
     "express-session": "^1.17.3",
     "js-yaml": "^4.1.0",
+    "n": "^9.2.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.3",
