@@ -4,6 +4,8 @@ import { UserService } from './user.service';
 import { Roles } from 'src/role/roles.decorator';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { PermissionGuard } from 'src/role/permission.guard';
+import { HasPermission } from 'src/role/permission.decorator';
 
 
 @UseGuards(AuthGuard)
@@ -14,6 +16,7 @@ export class UserController {
     }
 
     @Post()
+    @HasPermission('read:user')
     @Roles('admin','user')
     create(@Body() createUserDto:CreateUserDto)
     {

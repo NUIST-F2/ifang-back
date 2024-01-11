@@ -13,7 +13,8 @@ export class PermissionGuard implements CanActivate {
       return true; // 没有标记权限的路由或方法默认允许访问
     }
 
-    const userPermissions: string[] = ['read:user', 'write:user', 'fullAccess:admin','read:admin','write:admin'];
+    const { userPermissions } = context.switchToHttp().getRequest();
+    //const userPermissions: string[] = ['read:user', 'write:user', 'fullAccess:admin','read:admin','write:admin'];
 
     const hasPermission = requiredPermissions.some((permission) => userPermissions.includes(permission));
 
