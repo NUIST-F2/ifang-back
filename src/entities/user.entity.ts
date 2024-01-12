@@ -19,5 +19,6 @@ export class User {
     role: Role
 
     @OneToOne(() => Profile, profile => profile.user) // 使用@OneToOne定义一对一关系  
-    profile: Profile;  
+    profile: Profile;
+    //依旧存在三个表格不完善情况，需要修改，详细见GitHub issue  
 }
