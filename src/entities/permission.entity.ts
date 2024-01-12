@@ -14,5 +14,7 @@ export class Permission {
   pmid:number;
   @Column()
   name: string;
+  @ManyToOne(type => Profile, profile => profile.permissions)  
+  profile: Profile;  
 
 }

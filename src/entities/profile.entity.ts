@@ -49,10 +49,6 @@ export class Profile {
     this.user.role = this.role;  
   }  
 
-
-  @JoinColumn()
-  @OneToMany(type => Permission, ()=>permission => permission.pmid, {
-    cascade: true,//insert 级联插入
-  })
-  permissions: Permission[];
+  @OneToMany(type => Permission, permission => permission.name)  
+  permissions: Permission[];  
 }

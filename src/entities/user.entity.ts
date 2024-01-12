@@ -1,5 +1,6 @@
 import { Role } from "src/role/roles.enum";
-import { Column, Entity, Index, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Profile } from "./profile.entity";
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
         enum: Role,
     })
     role: Role
+
+    @OneToOne(() => Profile, profile => profile.user) // 使用@OneToOne定义一对一关系  
+    profile: Profile;  
 }
