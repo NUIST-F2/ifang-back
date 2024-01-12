@@ -16,8 +16,8 @@ import { Profile } from 'src/entities/profile.entity';
 export class UserService {
     constructor(
         @InjectRepository(User)
-        @InjectRepository(Profile)
         private readonly userRepository: Repository<User>,
+        @InjectRepository(Profile)
         private readonly profileRepository: Repository<Profile>,
         private readonly connection: DataSource,
     ) {

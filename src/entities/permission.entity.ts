@@ -1,16 +1,18 @@
 import {
   Column,
   Entity,
-  ManyToMany,
+  ManyToOne,
+  PrimaryColumn,
 } from 'typeorm';
 import { Profile } from './profile.entity';
+import internal from 'stream';
 
 @Entity()
 export class Permission {
-  @Column('simple-array')
+
+  @PrimaryColumn()
+  pmid:number;
+  @Column()
   name: string;
 
-  @ManyToMany(type => Profile,profile =>profile.permissions)
-  
-  profile : Profile[];
 }
