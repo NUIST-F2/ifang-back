@@ -54,7 +54,7 @@ export class UserService {
             ...updateUserDto,
         });
         if (!user) {
-            throw new NotFoundException(`Coffee #${username} not found !!!`);
+            throw new NotFoundException(`User #${username} not found !!!`);
         }
         return this.userRepository.save(user);
     }

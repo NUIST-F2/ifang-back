@@ -6,6 +6,7 @@ import {
   Index,
   JoinColumn,
   JoinTable,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -32,14 +33,14 @@ export class Profile {
   })
   role: Role;
 
+  @OneToOne(() => User, user => user.profile)
   @JoinColumn()
-  @OneToOne(() => User, { cascade: true, eager: true })
   user: User;
-
 
   @BeforeInsert()
   @BeforeUpdate()
-  updateUser(): void {  
+  updateUser(): void { 
+    console.log("updateUser called"); 
     if (!this.user) {  
       this.user = new User();  
     }  
@@ -47,7 +48,7 @@ export class Profile {
     this.user.username = this.username;  
     this.user.password = this.password;  
     this.user.role = this.role;  
-  }  
+  }
 
   @OneToMany(type => Permission, permission => permission.name)  
   permissions: Permission[];  
