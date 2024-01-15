@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config'
 import { CorsMiddleware } from '@nest-middlewares/cors';
+import { AdminController } from './admin/admin.controller';
+import { AdminModule } from './admin/admin.module';
 @Module({
   imports: [
     ConfigModule.forRoot(), TextileModule, TypeOrmModule.forRoot(
@@ -21,9 +23,9 @@ import { CorsMiddleware } from '@nest-middlewares/cors';
         synchronize: true,
       }
 
-    ), UserModule, UserModule, AuthModule, 
+    ), UserModule, UserModule, AuthModule, AdminModule, 
     ],
-  controllers: [AppController],
+  controllers: [AppController, AdminController],
   providers: [AppService],
 })
 export class AppModule { 
