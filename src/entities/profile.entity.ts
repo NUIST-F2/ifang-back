@@ -6,6 +6,7 @@ import {
   Index,
   JoinColumn,
   JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -39,17 +40,18 @@ export class Profile {
 
   @BeforeInsert()
   @BeforeUpdate()
-  updateUser(): void { 
-    console.log("updateUser called"); 
-    if (!this.user) {  
-      this.user = new User();  
-    }  
-    this.user.id = this.id;  
-    this.user.username = this.username;  
-    this.user.password = this.password;  
-    this.user.role = this.role;  
+  updateUser(): void {
+    console.log("updateUser called");
+    if (!this.user) {
+      this.user = new User();
+    }
+    this.user.id = this.id;
+    this.user.username = this.username;
+    this.user.password = this.password;
+    this.user.role = this.role;
   }
 
-  @OneToMany(type => Permission, permission => permission.name)  
-  permissions: Permission[];  
+  @ManyToMany(() => Permission, permission => permission.profile, { cascade: true })
+  @JoinTable()
+  permissions: Permission[];
 }

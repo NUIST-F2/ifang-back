@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  ManyToMany,
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
@@ -14,7 +15,7 @@ export class Permission {
   pmid:number;
   @Column()
   name: string;
-  @ManyToOne(type => Profile, profile => profile.permissions)  
-  profile: Profile;  
+  @ManyToMany(() => Profile, profile => profile.permissions)
+  profile:Profile[];
 
 }
