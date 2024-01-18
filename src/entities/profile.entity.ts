@@ -7,8 +7,6 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  ManyToOne,
-  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -55,3 +53,5 @@ export class Profile {
   @JoinTable()
   permissions: Permission[];
 }
+export { Permission };
+
