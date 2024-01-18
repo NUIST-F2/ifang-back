@@ -4,7 +4,6 @@ import { AdminService } from './admin.service';
 export class AdminController {
     constructor(private readonly profilePermissionService: AdminService) { }
 
-
     @Post(':profileId/permissions/:permissionId')
     async associateProfileWithPermission(
         @Param('profileId') profileId: number,
@@ -13,6 +12,7 @@ export class AdminController {
         await this.profilePermissionService.associateProfileWithPermission(profileId, permissionId);
         return { success: true };
     }
+    
 
 } 
 

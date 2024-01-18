@@ -53,5 +53,4 @@ export class Profile {
   @JoinTable()
   permissions: Permission[];
 }
-export { Permission };
 
