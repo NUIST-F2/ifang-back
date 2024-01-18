@@ -4,4 +4,4 @@ import { AdminService } from './admin.service';
 @Module({
   providers: [AdminService]
 })
-export class AdminModule {}
+export class AdminModule { }

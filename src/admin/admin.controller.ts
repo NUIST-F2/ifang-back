@@ -12,7 +12,7 @@ export class AdminController {
         await this.profilePermissionService.associateProfileWithPermission(profileId, permissionId);
         return { success: true };
     }
-    
 
-} 
+
+}
 

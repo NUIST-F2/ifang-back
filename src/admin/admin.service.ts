@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Profile} from 'src/entities/profile.entity';
+import { Profile } from 'src/entities/profile.entity';
 import { Permission } from 'src/entities/permission.entity';
 import { Repository } from 'typeorm';
 
@@ -29,7 +29,8 @@ export class AdminService {
         await this.profileRepository.save(profile);
     }//给予权限操作，仅有管理员可用，未测试
     async getPermissionIdsForProfile(profileId: number): Promise<number[]> {
-        const profile = await this.profileRepository.findOne({ where: { id: profileId },
+        const profile = await this.profileRepository.findOne({
+            where: { id: profileId },
             relations: ['permissions'],
         });
 
@@ -41,7 +42,8 @@ export class AdminService {
     }
 
     async getProfileIdsForPermission(permissionId: number): Promise<number[]> {
-        const permission = await this.permissionRepository.findOne({where:{pmid:permissionId}, 
+        const permission = await this.permissionRepository.findOne({
+            where: { pmid: permissionId },
             relations: ['profiles'],
         });
 
