@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Profile } from 'src/entities/profile.entity';
 import { Permission } from 'src/entities/permission.entity';
 import { Repository } from 'typeorm';
+import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class AdminService {
@@ -12,6 +14,8 @@ export class AdminService {
         private profileRepository: Repository<Profile>,
         @InjectRepository(Permission)
         private permissionRepository: Repository<Permission>,
+        @InjectRepository(User)
+        private userRepository: Repository<User>,
     ) { }
 
     async associateProfileWithPermission(profileId: number, permissionId: number): Promise<void> {
@@ -31,7 +35,7 @@ export class AdminService {
     async getPermissionIdsForProfile(profileId: number): Promise<number[]> {
         const profile = await this.profileRepository.findOne({
             where: { id: profileId },
-            relations: ['permissions'],
+            relations: ['permission'],
         });
 
         if (!profile) {
@@ -44,7 +48,7 @@ export class AdminService {
     async getProfileIdsForPermission(permissionId: number): Promise<number[]> {
         const permission = await this.permissionRepository.findOne({
             where: { pmid: permissionId },
-            relations: ['profiles'],
+            relations: ['profile'],
         });
 
         if (!permission) {
@@ -52,7 +56,21 @@ export class AdminService {
         }
 
         return permission.profile.map(profile => profile.id);
+        //以上两个返回参数未测试
     }
+
+    async getProfileOfUser(name: string): Promise<Profile> {
+        const user = await this.userRepository.findOne({
+            where: { username: name },
+            relations: ['profile'],
+        });
+
+        if (!user) {
+            throw new NotFoundException('User not found');;
+        }
+
+        return user.profile;
+    }//待测试
 
 
 
